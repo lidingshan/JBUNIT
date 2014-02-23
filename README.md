@@ -45,3 +45,5 @@ To use JBUNIT, what you need to do are
 1. ASSERT.TRUE(expression, error_message)
 1. ASSERT.FALSE(expression, error_message)
 
+### Build source code
+The build script of JBUNIT in the folder of build is created based on JBaseBuilder. You may download this utility and configure it with your development environment setup and then build JBUNIT source code. Or you may compile code manually.
