@@ -1,0 +1,7 @@
+SUBROUTINE ASSERT.LESS(EXP1, EXP2, MSG)
+	IF EXP1 < EXP2 THEN
+		RETURN
+	END ELSE
+		PRINT 'Expect ' : EXP1 : ' to be less than ' : EXP2 : ' but actually not. Error Msg: ' : MSG
+		EXIT (1)
+	END 

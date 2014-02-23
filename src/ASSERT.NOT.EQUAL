@@ -1,0 +1,7 @@
+SUBROUTINE ASSERT.NOT.EQUAL(EXP1, EXP2, MSG)
+	IF NOT(EXP1=EXP2) THEN
+		RETURN
+	END ELSE
+		PRINT 'Expect ' : EXP1 : ' not to be equal to ' : EXP2 : ' but they are equal. Error Msg: ' : MSG
+		EXIT (1)
+	END 

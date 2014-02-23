@@ -1,0 +1,30 @@
+*-----------------------------------------------------------------------------
+* <Rating>0</Rating>
+*-----------------------------------------------------------------------------
+PROGRAM JBUNIT.MAIN
+    IF NOT(GETENV("JBUNIT_HOME", JBUNIT.HOME)) THEN
+        PRINT "Please set the value for environment variable of JBUNIT_HOME."
+        ABORT
+    END
+
+    IF LEN(SENTENCE(1)) > 0 THEN
+        TESTCASE.PATH = SENTENCE(1)
+    END ELSE
+        PRINT "ENTER THE PATH OF TEST CASES"
+        INPUT TESTCASE.PATH
+    END
+
+	TOTAL.TEST.COUNT = 0
+	TOTAL.FAILED.COUNT = 0
+	TOTAL.SUCCESS.COUNT = 0
+
+    PRINT '==================Start Testing===================='
+    PRINT
+    DEEP.LEVEL = 1
+    PRINT TESTCASE.PATH
+    CALL JBUNIT.RUNNER(JBUNIT.HOME, TESTCASE.PATH, TOTAL.TEST.COUNT, TOTAL.FAILED.COUNT, TOTAL.SUCCESS.COUNT, DEEP.LEVEL)
+ 
+ 	PRINT 
+    PRINT '===================End Testing====================='
+   	PRINT 'Total Tests: ' : TOTAL.TEST.COUNT : ', Passed: ' : TOTAL.SUCCESS.COUNT : ', Failed: ' : TOTAL.FAILED.COUNT
+	STOP

@@ -1,0 +1,59 @@
+*-----------------------------------------------------------------------------
+* <Rating>-11</Rating>
+*-----------------------------------------------------------------------------
+SUBROUTINE JBUNIT.RUNNER(JBUNIT.HOME, PATH, TOTAL.TEST.COUNT, TOTAL.FAILED.COUNT, TOTAL.SUCCESS.COUNT, DEEP.LEVEL)    
+    SEL.CMD = 'SELECT ':PATH: ' WITH @ID LIKE TEST...'
+    CALL EB.READLIST(SEL.CMD,SEL.LIST,'',NO.OF.RTNS,ERR)
+    
+    LOOP
+        REMOVE RTN.NAME FROM SEL.LIST SETTING RTN.POS
+    WHILE RTN.NAME:RTN.POS
+        FILE.PATH = PATH : '\' : RTN.NAME
+        BATCH.CMD = JBUNIT.HOME : "\check_dir.bat " : FILE.PATH
+        EXECUTE(BATCH.CMD) CAPTURING IS.DIR
+        
+        PREFIX.STR = ''
+
+        FINDSTR "TRUE" IN IS.DIR SETTING FIELD.POSITION THEN
+            GOSUB MAKE.HIERARCHY.PREFIX.STR
+            PRINT PREFIX.STR
+
+            GOSUB GOTO.CHILD.FOLDER
+            CALL JBUNIT.RUNNER(JBUNIT.HOME, FILE.PATH, TOTAL.TEST.COUNT, TOTAL.FAILED.COUNT, TOTAL.SUCCESS.COUNT, DEEP.LEVEL)
+            GOSUB GOBACK.CURRENT.FOLDER
+        END ELSE
+            GOSUB MAKE.HIERARCHY.PREFIX.STR
+
+            TOTAL.TEST.COUNT = TOTAL.TEST.COUNT + 1
+
+            EXECUTE RTN.NAME SETTING ERR.CODE
+            
+            IF LEN(ERR.CODE) > 0 THEN
+                TOTAL.FAILED.COUNT = TOTAL.FAILED.COUNT + 1
+                PREFIX.STR = PREFIX.STR : ' (Failed)'
+            END ELSE
+                TOTAL.SUCCESS.COUNT = TOTAL.SUCCESS.COUNT + 1
+                PREFIX.STR = PREFIX.STR : ' (Passed)'
+            END
+
+            PRINT PREFIX.STR
+        END
+
+    REPEAT
+
+    RETURN
+
+    MAKE.HIERARCHY.PREFIX.STR:
+        FOR I = 1 TO DEEP.LEVEL
+            PREFIX.STR = PREFIX.STR : '  '
+        NEXT I
+        PREFIX.STR = PREFIX.STR : '|-' : RTN.NAME
+        RETURN
+
+    GOTO.CHILD.FOLDER:
+        DEEP.LEVEL = DEEP.LEVEL + 1
+        RETURN
+
+    GOBACK.CURRENT.FOLDER:
+        DEEP.LEVEL = DEEP.LEVEL - 1
+        RETURN
