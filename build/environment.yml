@@ -3,13 +3,13 @@
 # Please don't change the name of &DefaultRemoteConfig
 default: &DefaultRemoteConfig
     # The host name of remote server
-    hostname: INVSYDMDEV035
+    hostname: <remote host name> 
     # The user name that will be used to log on remote server
-    username: svc_t24dev035
+    username: <remote server user name>
     # Optional. The logon id that will be used to log on remote server. If it hasn't been configured, the the username will be used.
-    login_id: ap\{username}
+    login_id: <remote server login id>
     # The password to log on remote server
-    password: HighRoad04
+    password: <remote server login password>
     # The prompt on terminal to input log on id
     login_prompt: "Account Name"
     # The prompt on terminal to input log on password
@@ -18,18 +18,18 @@ default: &DefaultRemoteConfig
     terminal_prompt: "jsh {username} ~ -->"
     # The remote location which will copy source code files from local sourcecode_path
     # Please make sure the network path can be accessed locally
-    source_copy_to: \\{hostname}\d$\T24Build\bnk.run\LEE.BP\JBUNIT\
+    source_copy_to: <remote server path that will store the source codes>
     # The remote location which will copy test code files from local testecode_path
     # Please make sure the network path can be accessed locally
-    test_copy_to: \\{hostname}\d$\T24Build\bnk.run\LEE.BP\JBUNIT\TEST\
+    test_copy_to: <remote server path that will store the test codes>
     # The remote root path what will be used to tell EP.COMPILE where to find the source code file
-    source_root: LEE.BP\JBUNIT
+    source_root: <remote server path which is the root path of source codes to be compiled>
     # The remote root path what will be used to tell EP.COMPILE where to find the test code file
-    test_root: LEE.BP\JBUNIT\TEST
+    test_root: <remote server path which is the root path of test codes to be compiled>
     # The remote root directory that contains all of the tests to be exeucted
-    test_execution_home: LEE.BP\JBUNIT\TEST
+    test_execution_home: <remote server path which is the root path to execute the tests>
     # The remote full path where JBUNIT utility is existing
-    JBUNIT_HOME: d:\T24Build\bnk.run\LEE.BP\JBUNIT
+    JBUNIT_HOME: <remote server path which is home path of JBUNIT>
 
 # This is the configuration of a remote server. Please be aware that the name of remote server
 # is case sensitive
